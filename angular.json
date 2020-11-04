@@ -119,6 +119,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "app7"
+    }
+  },
+  "defaultProject": "app7",
+  "cli": {
+    "analytics": false
+  }
 }
