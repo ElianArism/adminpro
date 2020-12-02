@@ -1,36 +1,27 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+
+// modulos
 import { AppRoutingModule } from './app-routing.module';
+import { PagesModule } from './pages/pages.module'
+import { SharedModule } from './shared/shared.module';
+import { AuthModule } from './auth/auth.module';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { NotFound404Component } from './pages/not-found404/not-found404.component';
-import { BreadcrumbsComponent } from './shared/breadcrumbs/breadcrumbs.component';
-import { SidebarComponent } from './shared/sidebar/sidebar.component';
-import { HeaderComponent } from './shared/header/header.component';
-import { ProgressComponent } from './pages/progress/progress.component';
-import { GraficalComponent } from './pages/grafical/grafical.component';
-import { PagesComponent } from './pages/pages.component';
+import { NotFound404Component } from './not-found404/not-found404.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    RegisterComponent,
-    DashboardComponent,
-    NotFound404Component,
-    BreadcrumbsComponent,
-    SidebarComponent,
-    HeaderComponent,
-    ProgressComponent,
-    GraficalComponent,
-    PagesComponent
+    NotFound404Component
   ],
+  
   // los modulos van aca
   imports: [
     BrowserModule,
+    PagesModule,
+    SharedModule,
+    AuthModule,
     AppRoutingModule, 
   ],
   providers: [],
