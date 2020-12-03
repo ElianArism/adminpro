@@ -1,1 +1,32 @@
-<p>grafical works!</p>
+<div class="row">
+    <div class="col-6">
+        <app-doughnut 
+          [title]="'Sales'"
+          [labels]="labelGraficalOne"
+          [data]="valuesGraficalOne"
+        >
+        </app-doughnut>
+    </div>
+  
+    <div class="col-6">
+        <app-doughnut
+          [title]="'Purchases'"
+        ></app-doughnut>
+     </div> 
+</div>
+
+<div class="row">
+    <div class="col-6">
+       <app-doughnut 
+        [title]="'More Sales'"
+        [labels]="labelGraficalOne"
+        [data]="valuesGraficalOne"
+        ></app-doughnut>
+    </div>
+  
+    <div class="col-6">
+        <app-doughnut
+          [title]="' More Purchases'"
+        ></app-doughnut>
+    </div> 
+</div>

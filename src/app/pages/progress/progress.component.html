@@ -1,1 +1,63 @@
-<p>progress works!</p>
+<div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">Progress works</h3>
+            <div class="progress m-t-20">
+                <!-- Una propiedad entre corchetes [] implica que recibe el valor de una variable o funcion del componente  -->
+                <div 
+                    class="progress-bar bg-info progress-bar-striped active" 
+                    style="height:10px;" 
+                    [style.width]="getProgress1"
+                    role="progressbar"
+                > 
+                 <span class="sr-only">85% Complete (success)</span> 
+                </div>
+
+            </div>
+
+            <div class="progress m-t-20">
+               
+                <div 
+                  class="progress-bar active progress-bar-striped bg-danger"
+                  style="height:6px;" 
+                  [style.width]="getProgress2"
+                  role="progressbar"
+                > 
+                    <span class="sr-only">60% Complete</span>
+                </div>
+            
+            </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <!-- los inputs se usan para enviarle informacion al componente-->
+                <!-- (setProgress)="progress1 = $event" porque el evento retorna un number -->
+                <app-incrementer [progress]="progress1"
+                                 (setProgress)="progress1 = $event"
+                ></app-incrementer>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <!-- los inputs se usan para enviarle informacion al componente-->
+                <!-- (setProgress)="progress1 = $event" porque el evento retorna un number -->
+                <app-incrementer 
+                    [progress]="progress2"
+                    [btnClass]=" 'btn btn-danger' "
+                    (setProgress)="progress2 = $event"
+                >
+                </app-incrementer>
+            </div>
+        </div>
+    </div>
+</div>

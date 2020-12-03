@@ -13,7 +13,7 @@ import { NotFound404Component } from './not-found404/not-found404.component';
 @NgModule({
   declarations: [
     AppComponent,
-    NotFound404Component
+    NotFound404Component,
   ],
   
   // los modulos van aca
