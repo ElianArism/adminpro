@@ -6,13 +6,14 @@ import { LoginComponent } from './login/login.component';
 
 
 const routes: Routes = [
+  
   {
     path: 'auth',
-    component: RegisterComponent,
+    // auth depende solo de las rutas hijas, por eso no carga ningun componente en si
     children: [
-      { path: '', component: RegisterComponent },
+      { path: '', component: LoginComponent},
       { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent }
+      { path: 'register', component: RegisterComponent },
     ]
   }
 ];
