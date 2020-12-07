@@ -26,9 +26,18 @@
                             class="mdi mdi-gauge"></i><span class="hide-menu">{{ menu.title }}
                             <span class="label label-rouded label-themecolor pull-right">{{ menu.submenu.length }}</span></span></a>
                     <ul aria-expanded="false" class="collapse">
+                        <!-- routerLink=Active activa siempre el routerlink para la opcion dashboard, ya que es
+                        el contenedor de las otras opciones -->
+                        <!-- [routerLinkActiveOptions]="{exact: true}" marca que se active cuando el path navegado sea igual al 
+                        path de la opcion
+                        -->
                         <li *ngFor="let item of menu.submenu">
-                            <a [routerLink]="item.path">{{ item.title }}</a>
+                            <a [routerLink]="item.path"
+                               routerLinkActive="active"
+                               [routerLinkActiveOptions]="{exact: true}"
+                               >{{ item.title }}</a>
                         </li>
+
                     </ul>
                 </li>
             </ul>

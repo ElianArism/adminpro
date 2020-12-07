@@ -16,13 +16,22 @@ export class SidebarService {
             path: ''
           },
           {
+            title: 'Grafical',
+            path: 'grafical',
+          },
+          {
             title: 'Progress',
             path: 'progress'
           },
           {
-            title: 'Grafical',
-            path: 'grafical',
-          }
+            title: 'Promises',
+            path: 'promises'
+          },
+          {
+            title: 'RxJS',
+            path: 'rxjs'
+          },
+          
         ]
       };
   }
