@@ -36,7 +36,6 @@ export class BreadcrumbsComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.titleSub.unsubscribe(); // al desloguearse se desubscribe
-    
   }
 
 }

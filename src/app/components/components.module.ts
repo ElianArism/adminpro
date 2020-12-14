@@ -13,7 +13,7 @@ import { DoughnutComponent } from './doughnut/doughnut.component';
 @NgModule({
   declarations: [
     IncrementerComponent,
-    DoughnutComponent
+    DoughnutComponent,
   ],
   imports: [
     CommonModule,
