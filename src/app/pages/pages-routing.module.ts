@@ -10,6 +10,7 @@ import { GraficalComponent } from './grafical/grafical.component';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 import { PromisesComponent } from './promises/promises.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
+import { PerfilComponent } from './perfil/perfil.component';
 
 const routes: Routes = [
   { 
@@ -22,6 +23,7 @@ const routes: Routes = [
     children: [
       // podes pasarle datos a cada path con la propiedad data
       { path: '', component: DashboardComponent, data: { title: 'Dashboard' } }, 
+      { path: 'perfil', component: PerfilComponent, data: {title: 'My Profile'} },
       { path: 'progress', component: ProgressComponent, data: { title: 'ProgressBar' } },
       { path: 'grafical', component: GraficalComponent, data: { title: 'Grafical' }},
       { path: 'account-settings', component: AccountSettingsComponent, data: { title: 'Themes' } },

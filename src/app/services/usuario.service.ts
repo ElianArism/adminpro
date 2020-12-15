@@ -6,6 +6,8 @@ import { environment } from '../../environments/environment'; // entorno desarro
 import { registerForm } from '../interfaces/register-form.interface';
 import { loginForm } from '../interfaces/login-form.interface';
 
+import { Usuario } from '../models/usuario.model';
+
 // rxjs 
 // tap lo que hace es disparar una funcion cada que se ejecuta
 import { tap, map, catchError } from 'rxjs/operators';
@@ -21,13 +23,27 @@ export class UsuarioService {
   
   private backend_url: string = environment.backend_url;
   private auth2: any;
+  private usuario: Usuario;
+  
   constructor( private http: HttpClient, private router: Router, private ngZone: NgZone) { 
     this.googleInit();
   }
 
+  get getUsuario() {
+    return this.usuario;
+  }
   get getAuth() {
     return this.auth2;
   }
+  get getToken():string {
+    return localStorage.getItem('token') || '';
+  }
+  get getHeaders() {
+    return { headers: { 
+      'x-token': this.getToken
+    }}
+  }
+  
   googleInit() {
     return new Promise<void>(resolve => {
       gapi.load('auth2', () => {
@@ -40,19 +56,31 @@ export class UsuarioService {
       });  
     });
   }
-  // solicita crear usuario en bd
-  crearUsuario( formData: registerForm ) {
-    
-    // post request add user
-    return this.http.post(`${this.backend_url}/usuarios`, formData)
-      .pipe(
-        tap( (res: any) => {
-          // setear token en ls
-          localStorage.setItem('token', res.token);
-        })
-      )
-  }
+  
+  // validar token 
+  validarToken(): Observable<boolean> { 
 
+    return this.http.get(`${this.backend_url}/login/renovar-token`, this.getHeaders)
+    .pipe(
+      map( (res:any) => {
+        const { nombre, email, role, google, img = '', uid } = res.usuarioDB;
+        
+        // crear instancia usuario
+        this.usuario = new Usuario(nombre, email, '', google, img, role, uid);
+        
+        // renovar token en ls
+        localStorage.setItem('token', res.token);
+        
+        // si llega aca el token es valido, y retorna true
+        return true; 
+      }), 
+      catchError(
+        // si llega aca el token es invalido, y retorna false
+        err => of(false) // crea un observable con el valor false
+      )
+    );
+  }
+  
   // login usuario 
   login(formData: loginForm) {
     return this.http.post(`${this.backend_url}/login`, formData)
@@ -75,28 +103,31 @@ export class UsuarioService {
       )
   }
 
-  // validar token 
-  validarToken(): Observable<boolean> { 
-    const token = localStorage.getItem('token') || '';
-
-    return this.http.get(`${this.backend_url}/login/renovar-token`, {
-      headers: {
-        'x-token': token
-      }
-    }).pipe(
-      tap( (res:any) => {
-        // renovar token en ls
-        localStorage.setItem('token', res.token);
-      }),
-      map( 
-        // si llega aca el token es valido, y retorna true
-        res => true
-      ), 
-      catchError(
-        // si llega aca el token es invalido, y retorna false
-        err => of(false) // crea un observable con el valor false
+  // solicita crear usuario en bd
+  crearUsuario( formData: registerForm ) {
+    
+    // post request add user
+    return this.http.post(`${this.backend_url}/usuarios`, formData, this.getHeaders)
+      .pipe(
+        tap( (res: any) => {
+          // setear token en ls
+          localStorage.setItem('token', res.token);
+        })
       )
-    );
+  }
+
+  // solicita actualizar usuario en bd 
+  actualizarUsuario(formData: {nombre: string, email: string, role: string}) {
+    formData = {
+      ...formData, 
+      role: this.usuario.getRole
+    }
+    return this.http.put(`${this.backend_url}/usuarios/${this.usuario.getUid}`, formData, this.getHeaders)
+      .pipe(
+        tap((res:any) => {
+          localStorage.setItem('token', res.token)
+        })
+      )
   }
 
   logout() {
