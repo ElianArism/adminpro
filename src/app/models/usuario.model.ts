@@ -16,16 +16,18 @@ export class Usuario {
     ) {}
 
     get getImagenUrl() {
+        if(!this.img) {
+            return `${base_url}/upload/usuarios/no-img`;
+        }
         // si es de google 
-        if (this.img.includes('https')) {
+        else if (this.img.includes('https')) {
             return this.img;
         }
         // si no
-
-        if(this.img) {
+        else if(this.img) {
             return `${base_url}/upload/usuarios/${this.img}`;
         } else {
-            return `${base_url}/upload/usuarios/no-img`;;
+            return `${base_url}/upload/usuarios/no-img`;
         }
     }
 
@@ -54,6 +56,10 @@ export class Usuario {
     
     get getRole() {
         return this.role;
+    }
+
+    set setRole(role: 'USER_ROLE' | 'ADMIN_ROLE') {
+        this.role = role;
     }
     get getGoogle() {
         return this.google;

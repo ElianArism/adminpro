@@ -1,0 +1,92 @@
+<div class="row">
+    <div class="col-12">
+        <!-- las props marcadas con # son una referencia local al elemento en angular -->
+        <div class="card">
+            <div class="card-body">
+                <input 
+                  type="text"
+                  class="form-control"
+                  placeholder="Buscar usuarios..."
+                  (keyup.enter)="buscar(terminoInput.value)"
+                  #terminoInput
+                >
+                
+                <button *ngIf="isSearching" (click)="buscar(''); terminoInput.value = '' " class="mt-1 btn btn-secondary">Limpiar Busqueda</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn fast" *ngIf="cargandoFlag">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mt-1 mb-0">Aguarde</p>
+        </div>
+    </div>
+</div>
+
+<div class="row" *ngIf="!cargandoFlag">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Usuarios</h4>
+                <h6 class="card-subtitle">Usuarios registrados en la aplicacion ({{ totalUsuarios }}).</h6>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="w-100">Avatar</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th class="w-100">Role</th>
+                                <th class="w-100">Auth</th>
+                                <th class="text-nowrap w-100">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody class="animated fadeIn fast">
+                            <tr *ngFor="let u of usuarios">
+                                <td (click)="this.ModalService.abrirModal(u, 'usuarios')"><img [src]="u.getImagenUrl" class="profile cursor"></td>
+                                <td>{{ u.getNombre }}</td>
+                                <td>{{ u.getEmail }}</td>
+                              
+                                  <!-- [ngModel] bindea una propiedad con la vista. pero [(ngModel)] bindea una propiedad con la vista y los cambios de valor que se hagan en ella en la vista 
+                                cambian inmediatamente el valor en la logica, y viceversa -->
+                                <td>
+                                    <select 
+                                    class="form-control w-150"
+                                    [ngModel]="u.getRole"
+                                    (change)="cambiarRole(u, option.value)"
+                                    #option
+                                    >
+                                        <option value="ADMIN_ROLE">Admin</option>
+                                        <option value="USER_ROLE">User</option>
+                                    </select>
+                                </td>
+                              
+
+                                <td>
+                                    <span *ngIf="u.getGoogle" class="label label-danger">
+                                        Google
+                                    </span>
+                                    <span *ngIf="!u.getGoogle" class="label label-info">
+                                        Email
+                                    </span>
+                                </td>
+                              
+                                <td class="text-nowrap text-center">
+                                    <!-- <a data-toggle="tooltip" data-original-title="Editar"> <i class="fa fa-pencil text-inverse m-r-10"></i> </a> -->
+                                    <a data-toggle="tooltip" data-original-title="Borrar" class="cursor" (click)="eliminarUsuario(u)"> <i class="fa fa-close text-danger"></i> </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <button *ngIf="!isSearching" (click)="cambiarPagina(-5)" class="btn btn-secondary mr-2">Anterior</button>
+                <button *ngIf="!isSearching" (click)="cambiarPagina(5)" class="btn btn-secondary">Siguiente</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -13,3 +13,18 @@
     width: 400px;
     height: 400px;
 }
+
+.w-100 {
+    width: 100px;
+}
+
+.w-150 {
+    width: 150px;
+}
+
+.profile {
+    border-radius: 100%;
+    width: 75px;
+    height: 75px;
+    margin: auto;
+}

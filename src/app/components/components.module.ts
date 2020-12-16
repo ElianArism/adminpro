@@ -7,6 +7,7 @@ import { ChartsModule } from 'ng2-charts';
 
 import { IncrementerComponent } from './incrementer/incrementer.component';
 import { DoughnutComponent } from './doughnut/doughnut.component';
+import { ModalImgComponent } from './modal-img/modal-img.component';
 
 
 
@@ -14,6 +15,7 @@ import { DoughnutComponent } from './doughnut/doughnut.component';
   declarations: [
     IncrementerComponent,
     DoughnutComponent,
+    ModalImgComponent,
   ],
   imports: [
     CommonModule,
@@ -22,7 +24,8 @@ import { DoughnutComponent } from './doughnut/doughnut.component';
   ], 
   exports: [
     IncrementerComponent,
-    DoughnutComponent
+    DoughnutComponent,
+    ModalImgComponent
   ]
 })
 export class ComponentsModule { }

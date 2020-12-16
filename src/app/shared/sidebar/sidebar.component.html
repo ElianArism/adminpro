@@ -2,49 +2,65 @@
 <!-- Left Sidebar - style you can find in sidebar.scss  -->
 <!-- ============================================================== -->
 <aside class="left-sidebar">
-    <!-- Sidebar scroll-->
-    <div class="scroll-sidebar">
-        <!-- Sidebar navigation-->
-        <nav class="sidebar-nav">
-            <ul id="sidebarnav">
-                <li class="user-profile">
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><img
-                            [src]="usuario.getImagenUrl" alt="user" /><span class="hide-menu">{{ usuario.getNombre }}
-                        </span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <li><a routerLink="perfil">My Profile </a></li>
-                        <li><a href="javascript:void()">My Balance</a></li>
-                        <li><a href="javascript:void()">Inbox</a></li>
-                        <li><a routerLink="account-settings">Account Setting</a></li>
-                        <li><a routerLink="/auth/login">Logout</a></li>
-                    </ul>
-                </li>
-                <li class="nav-devider"></li>
-                <li class="nav-small-cap">PERSONAL</li>
-                <li>
-                    <a class="has-arrow waves-effect waves-dark" href="#" aria-expanded="false"><i
-                            class="mdi mdi-gauge"></i><span class="hide-menu">{{ menu.title }}
-                            <span class="label label-rouded label-themecolor pull-right">{{ menu.submenu.length }}</span></span></a>
-                    <ul aria-expanded="false" class="collapse">
-                        <!-- routerLink=Active activa siempre el routerlink para la opcion dashboard, ya que es
-                        el contenedor de las otras opciones -->
-                        <!-- [routerLinkActiveOptions]="{exact: true}" marca que se active cuando el path navegado sea igual al 
+  <!-- Sidebar scroll-->
+  <div class="scroll-sidebar">
+    <!-- Sidebar navigation-->
+    <nav class="sidebar-nav">
+      <ul id="sidebarnav">
+        <li class="user-profile">
+          <a
+            class="has-arrow waves-effect waves-dark"
+            href="#"
+            aria-expanded="false"
+            ><img [src]="usuario.getImagenUrl" alt="user" /><span
+              class="hide-menu"
+              >{{ usuario.getNombre }}
+            </span></a
+          >
+          <ul aria-expanded="false" class="collapse">
+            <li><a routerLink="perfil">My Profile </a></li>
+            <li><a href="javascript:void()">My Balance</a></li>
+            <li><a href="javascript:void()">Inbox</a></li>
+            <li><a routerLink="account-settings">Account Setting</a></li>
+            <li><a routerLink="/auth/login">Logout</a></li>
+          </ul>
+        </li>
+        <li class="nav-devider"></li>
+        <li class="nav-small-cap">PERSONAL</li>
+        <li *ngFor="let menu of menuList">
+          <a
+            class="has-arrow waves-effect waves-dark"
+            href="#"
+            aria-expanded="false"
+          >
+            <i [class]="menu.icon"></i>
+            <span class="hide-menu">{{ menu.title }}
+              <span class="label label-rouded label-themecolor pull-right">
+                  {{menu.submenu.length}}
+                </span>
+              </span>
+          </a>    
+
+          <ul aria-expanded="false" class="collapse">
+            <!-- routerLink=Active activa siempre el routerlink para la opcion dashboard, ya que esel contenedor de las otras opciones -->
+            <!-- [routerLinkActiveOptions]="{exact: true}" marca que se active cuando el path navegado sea igual al 
                         path de la opcion
                         -->
-                        <li *ngFor="let item of menu.submenu">
-                            <a [routerLink]="item.path"
-                               routerLinkActive="active"
-                               [routerLinkActiveOptions]="{exact: true}"
-                               >{{ item.title }}</a>
-                        </li>
-
-                    </ul>
-                </li>
-            </ul>
-        </nav>
-        <!-- End Sidebar navigation -->
-    </div>
-    <!-- End Sidebar scroll-->
+            <li *ngFor="let item of menu.submenu">
+              <a
+                [routerLink]="item.path"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }"
+                >{{ item.title }}</a
+              >
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    <!-- End Sidebar navigation -->
+  </div>
+  <!-- End Sidebar scroll-->
 </aside>
 <!-- ============================================================== -->
 <!-- End Left Sidebar - style you can find in sidebar.scss  -->

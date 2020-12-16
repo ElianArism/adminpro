@@ -4,9 +4,10 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class SidebarService {
-  private menu: Object;
+  private menu: any[];
+
   constructor() {
-    this.menu = 
+    this.menu = [
       {
         title: 'Dashboard',
         icon: 'mdi mdi-gauge',
@@ -33,7 +34,26 @@ export class SidebarService {
           },
           
         ]
-      };
+      },
+      {
+        title: 'maintenance',
+        icon: 'mdi mdi-folder-lock-open',
+        submenu: [
+          {
+            title: 'usuarios',
+            path: 'usuarios'
+          },
+          {
+            title: 'hospitales',
+            path: 'hospitales',
+          },
+          {
+            title: 'medicos',
+            path: 'medicos'
+          },
+        ]
+      }
+    ];
   }
 
   get getMenu() {

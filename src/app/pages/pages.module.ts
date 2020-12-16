@@ -17,6 +17,9 @@ import { AccountSettingsComponent } from './account-settings/account-settings.co
 import { PromisesComponent } from './promises/promises.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { PerfilComponent } from './perfil/perfil.component';
+import { UsuariosComponent } from './maintenance/usuarios/usuarios.component';
+import { ModalImgComponent } from '../components/modal-img/modal-img.component';
+
 
 @NgModule({
   declarations: [
@@ -28,6 +31,7 @@ import { PerfilComponent } from './perfil/perfil.component';
     PromisesComponent,
     RxjsComponent,
     PerfilComponent,
+    UsuariosComponent,
   ],
   exports: [
     ProgressComponent,

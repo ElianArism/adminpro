@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,7 @@ export class FileUploadService {
       if(data.ok) {
         return  data.fileName;
       } else {
+        Swal.fire('Error', data.msg, 'error');
         console.log(data.msg);
         return false;   
       }

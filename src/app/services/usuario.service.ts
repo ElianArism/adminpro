@@ -2,17 +2,21 @@ import { Injectable, NgZone } from '@angular/core';
 
 // libreria de angular para manejar peticiones http
 import { HttpClient} from '@angular/common/http';
+
 import { environment } from '../../environments/environment'; // entorno desarrollo
+
 import { registerForm } from '../interfaces/register-form.interface';
 import { loginForm } from '../interfaces/login-form.interface';
+import { cargarUsuario } from '../interfaces/cargarUsuario.interface';
 
 import { Usuario } from '../models/usuario.model';
 
 // rxjs 
 // tap lo que hace es disparar una funcion cada que se ejecuta
-import { tap, map, catchError } from 'rxjs/operators';
-import { of, Observable } from 'rxjs';
+import { tap, map, catchError, delay } from 'rxjs/operators';
+import { of, Observable, pipe } from 'rxjs';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 declare const gapi: any;
 
@@ -130,6 +134,36 @@ export class UsuarioService {
       )
   }
 
+  // carga registros en la vista
+  cargarUsuarios(desde: number = 0) {
+    const url = `${this.backend_url}/usuarios?desde=${desde}`;
+    return this.http.get<cargarUsuario>(url, this.getHeaders)
+      .pipe(
+        // se realiza este procedimiento para que los registros obtengan los metodos del modelo Usuario
+        map((res) => {
+          let usuarios;
+          usuarios = res.usuarios.map((u:any) => {
+            const {nombre, email, google, img = '', role, uid} = u;
+            return new Usuario(nombre, email, '' , google, img , role, uid);
+          });
+          res.usuarios = usuarios;
+          return res;
+        })
+      );
+  }
+
+  // actualizarRole
+  actualizarRole(usuario: Usuario ) {
+    
+    return this.http.put(`${this.backend_url}/usuarios/${usuario.getUid}`, usuario, this.getHeaders)
+      .pipe(
+        tap((res:any) => {
+          localStorage.setItem('token', res.token)
+        })
+      )
+  }
+
+  // lanza el logout
   logout() {
     localStorage.removeItem('token');
 
@@ -142,6 +176,14 @@ export class UsuarioService {
       });
       
     });
-  
+  }
+
+  // eliminar usuario 
+  eliminarUsuario(uid: string) {
+    const url = `${this.backend_url}/usuarios/${uid}`;
+    return this.http.delete<{ok: boolean, msg: string}>(url, this.getHeaders)
+      .pipe(
+        catchError(err => Swal.fire('Error', err.msg, 'error'))
+      );
   }
 }
