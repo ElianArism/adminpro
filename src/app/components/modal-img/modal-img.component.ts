@@ -8,10 +8,14 @@ import Swal from 'sweetalert2';
   templateUrl: './modal-img.component.html',
   styleUrls: ['./modal-img.component.css']
 })
-export class ModalImgComponent {
+export class ModalImgComponent  {
+
   public imgUpload: File;
   public prevImg: any;
-  constructor(public ModalService: ModalService, private FileUploadService: FileUploadService) { }
+
+  constructor(public ModalService: ModalService, private FileUploadService: FileUploadService) { 
+    
+  }
 
   // registra una imagen que el usuario preparo para subir en el input
   cambiarImg(file: File) {
@@ -36,22 +40,23 @@ export class ModalImgComponent {
   }
 
   
-   // solicita subir img
-   subirImg() {
+  // solicita subir img
+  subirImg() {
+    const id = this.ModalService.id; 
+    const tipo = this.ModalService.tipo;
     this.FileUploadService
-      .subirImagen(this.imgUpload, 'usuarios', this.ModalService.getUsuario.getUid)
-
+      .subirImagen(this.imgUpload, tipo, id)
       // cambiar img de usuario
       .then(img => {
-        this.ModalService.getUsuario.setImg = img
         Swal.fire('Guardado', 'Imagen actualizada correctamente.', 'success');
+        this.ModalService.nuevaImg.emit(img);
+        this.cerrarModal();
       })
       .catch(err =>{
         console.log(err)
         Swal.fire('Error', 'No pudo subirse la img', 'error')
       });
-
-      this.cerrarModal();
+    
   }
 
 

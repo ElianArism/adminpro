@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core'; //rendered2 es la forma de manipular un elemento del dom de forma segura (http://blog.enriqueoriol.com/2017/08/angular-dom-renderer.html)
+import { Component, OnDestroy } from '@angular/core'; //rendered2 es la forma de manipular un elemento del dom de forma segura (http://blog.enriqueoriol.com/2017/08/angular-dom-renderer.html)
 
 import Swal from 'sweetalert2';
 
@@ -7,6 +7,8 @@ import { Usuario } from 'src/app/models/usuario.model';
 import { UsuariosService } from 'src/app/services/busquedas/usuarios.service';
 import { UsuarioService } from '../../../services/usuario.service';
 import { ModalService } from '../../../services/modal.service';
+import { delay } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 
 @Component({
@@ -15,10 +17,11 @@ import { ModalService } from '../../../services/modal.service';
   styles: [
   ]
 })
-export class UsuariosComponent {
+export class UsuariosComponent implements OnDestroy{
   // @ViewChild('terminoInput') terminoInput: ElementRef; //seleccionando un elemento del dom en angular
   // this.terminoInput.nativeElement.value = ''; bad practice 
 
+  public imgSubs: Subscription;
   public totalUsuarios: number = 0; 
   public desde: number = 0;
   public usuarios: Usuario[] = [];
@@ -28,6 +31,14 @@ export class UsuariosComponent {
   public isSearching: boolean;
   constructor(private UsuarioService: UsuarioService, private busquedaUsuarios: UsuariosService, public ModalService:ModalService) {
     this.cargarUsuarios();
+  }
+
+  ngOnInit(): void {
+    this.imgSubs = this.ModalService.nuevaImg.pipe(delay(200)).subscribe( res => this.cargarUsuarios()); //se coloca un delay para darle tiempo a setear los cambios
+  }
+
+  ngOnDestroy(): void {
+    this.imgSubs.unsubscribe();
   }
 
   cargarUsuarios() {

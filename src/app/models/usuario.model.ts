@@ -31,6 +31,9 @@ export class Usuario {
         }
     }
 
+    get getNombreImg() {
+        return this.img;
+    }
     get getNombre() {
         return this.nombre;
     }

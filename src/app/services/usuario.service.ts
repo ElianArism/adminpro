@@ -17,6 +17,7 @@ import { tap, map, catchError, delay } from 'rxjs/operators';
 import { of, Observable, pipe } from 'rxjs';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
+import { ModalService } from './modal.service';
 
 declare const gapi: any;
 
@@ -29,9 +30,11 @@ export class UsuarioService {
   private auth2: any;
   private usuario: Usuario;
   
-  constructor( private http: HttpClient, private router: Router, private ngZone: NgZone) { 
+  constructor( private http: HttpClient, private router: Router, private ngZone: NgZone, private ModalService:ModalService) { 
     this.googleInit();
   }
+
+
 
   get getUsuario() {
     return this.usuario;
@@ -47,7 +50,6 @@ export class UsuarioService {
       'x-token': this.getToken
     }}
   }
-  
   googleInit() {
     return new Promise<void>(resolve => {
       gapi.load('auth2', () => {

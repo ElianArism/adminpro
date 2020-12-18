@@ -47,7 +47,7 @@
                         </thead>
                         <tbody class="animated fadeIn fast">
                             <tr *ngFor="let u of usuarios">
-                                <td (click)="this.ModalService.abrirModal(u, 'usuarios')"><img [src]="u.getImagenUrl" class="profile cursor"></td>
+                                <td (click)="this.ModalService.abrirModal(u.getUid, 'usuarios', u.getNombreImg)"><img [src]="u.getImagenUrl" class="profile cursor"></td>
                                 <td>{{ u.getNombre }}</td>
                                 <td>{{ u.getEmail }}</td>
                               
