@@ -1,0 +1,86 @@
+<div class="row">
+
+<div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <input 
+                  type="text"
+                  class="form-control"
+                  placeholder="Buscar medico..."
+                  (keyup.enter)="buscarMedicos(inputMedicos.value)"
+                  #inputMedicos
+                >
+
+            </div>
+        </div>
+    </div>
+</div>  
+
+<div class="row animated fadeIn fast" *ngIf="cargando">
+    <div class="col-12">
+        <div class="alert alert-info text-center">
+            <h4 class="alert-heading">Cargando</h4>
+            <i class="fa fa-spin fa-refresh fa-2x"></i>
+            <p class="mt-1 mb-0">Aguarde</p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+
+                <div class="row">
+                    <div class="col-8">
+                        <h4 class="card-title">Medicos</h4>
+                        <h6 class="card-subtitle">Medicos registrados en la aplicacion: {{totalMedicos}}.</h6>
+                    </div>
+
+                    <div class="col text-right">
+                        <a routerLink="/dashboard/medico/nuevo" class="btn btn-primary">Crear Medico</a>
+                    </div>
+
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center w-100">Avatar</th>
+                                <th>Nombre</th>
+                                <th class="w-100 text-nowrap">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let medico of medicos">
+                                <td>
+                                    <img 
+                                      [src]="medico.getImg | imagen:'medicos' " 
+                                      alt="" 
+                                      class="cursor img-avatar"
+                                      (click)="abrirModal(medico)"
+                                    >
+                                </td>
+                                <td>{{medico.getNombre}}</td>
+                                <td class="text-nowrap text-center">
+                                    <a data-toggle="tooltip" [routerLink]="['/dashboard/medico', medico.getId]" class="cursor" data-original-title="Editar Medico"> <i class="fa fa-pencil text-inverse m-r-10"></i></a>
+                                    <a 
+                                      data-toggle="tooltip" 
+                                      class="cursor" 
+                                      data-original-title="Borrar"
+                                      (click)="borrarMedico(medico)"
+                                    > 
+                                        <i class="fa fa-close text-danger"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <button class="btn btn-secondary mr-2" [disabled]="modoBusqueda" (click)="cambiarPagina(-5)">Anterior</button>
+                <button class="btn btn-secondary" [disabled]="modoBusqueda" (click)="cambiarPagina(5)">Siguiente</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -4,20 +4,20 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment'; // entorno desarrollo
 
 import { Usuario } from '../../models/usuario.model';
+import { Hospital } from '../../models/hospital.model';
+
 import { map } from 'rxjs/operators';
+import { Medico } from '../../models/medicos.model';
 
 const backend_url = environment.backend_url;
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsuariosService {
+export class BusquedaService {
 
   constructor(private http: HttpClient) { }
   
-  // get getUsuario() {
-  //   return this.usuario;
-  // }
 
   get getToken():string {
     return localStorage.getItem('token') || '';
@@ -37,8 +37,13 @@ export class UsuariosService {
         map((res: any) => {
           switch(tipo) {
               case 'usuarios':
-                return res = res.resultado.map(u => new Usuario(u.nombre, u.email, '', u.google, u.img, u.role, u.uid))
+                return res = res.resultado.map(u => new Usuario(u.nombre, u.email, '', u.google, u.img, u.role, u.uid));
               
+              case 'hospitales': 
+                return  res = res.resultado.map(h => new Hospital(h._id, h.nombre, h.img = 'no-image', h.usuario));
+              
+              case 'medicos':
+                return res = res.resultado.map(m => new Medico(m.nombre, m.mid, m.img, m.usuario, m.hospital));
               default: 
                 break;
           }

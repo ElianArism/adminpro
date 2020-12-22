@@ -12,6 +12,9 @@ import { PromisesComponent } from './promises/promises.component';
 import { RxjsComponent } from './rxjs/rxjs.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { UsuariosComponent } from './maintenance/usuarios/usuarios.component';
+import { MedicosComponent } from './maintenance/medicos/medicos.component';
+import { HospitalesComponent } from './maintenance/hospitales/hospitales.component';
+import { MedicoComponent } from './maintenance/medicos/medico.component';
 
 const routes: Routes = [
   { 
@@ -32,7 +35,12 @@ const routes: Routes = [
       { path: 'rxjs', component: RxjsComponent, data: { title: 'RxJS' } },
     
       // maintenance
-      { path: 'usuarios', component: UsuariosComponent, data: { title: 'Usuario de aplicacion' } }
+      { path: 'usuarios', component: UsuariosComponent, data: { title: 'Mantenimiento - Usuarios' } },
+      { path: 'medicos', component: MedicosComponent, data: { title: 'Mantenimiento - Medicos' } },
+      { path: 'hospitales', component: HospitalesComponent, data: { title: 'Mantenimiento - Hospitales' } },
+      
+      // path para actualizar un medico
+      {path: 'medico/:id', component: MedicoComponent, data: { title: 'Actualizar medico' }}
     ]
    }, 
 

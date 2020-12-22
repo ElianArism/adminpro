@@ -19,6 +19,10 @@ import { RxjsComponent } from './rxjs/rxjs.component';
 import { PerfilComponent } from './perfil/perfil.component';
 import { UsuariosComponent } from './maintenance/usuarios/usuarios.component';
 import { ModalImgComponent } from '../components/modal-img/modal-img.component';
+import { HospitalesComponent } from './maintenance/hospitales/hospitales.component';
+import { MedicosComponent } from './maintenance/medicos/medicos.component';
+import { PipesModule } from '../pipes/pipes.module';
+import { MedicoComponent } from './maintenance/medicos/medico.component';
 
 
 @NgModule({
@@ -32,6 +36,9 @@ import { ModalImgComponent } from '../components/modal-img/modal-img.component';
     RxjsComponent,
     PerfilComponent,
     UsuariosComponent,
+    HospitalesComponent,
+    MedicosComponent,
+    MedicoComponent,
   ],
   exports: [
     ProgressComponent,
@@ -47,6 +54,7 @@ import { ModalImgComponent } from '../components/modal-img/modal-img.component';
     FormsModule,
     ComponentsModule,
     ReactiveFormsModule,
+    PipesModule
   ]
 })
 export class PagesModule { }

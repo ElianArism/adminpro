@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 
 import { Usuario } from 'src/app/models/usuario.model';
 
-import { UsuariosService } from 'src/app/services/busquedas/usuarios.service';
+import { BusquedaService } from 'src/app/services/busquedas/busqueda.service';
 import { UsuarioService } from '../../../services/usuario.service';
 import { ModalService } from '../../../services/modal.service';
 import { delay } from 'rxjs/operators';
@@ -29,7 +29,7 @@ export class UsuariosComponent implements OnDestroy{
 
   public cargandoFlag: boolean = true;
   public isSearching: boolean;
-  constructor(private UsuarioService: UsuarioService, private busquedaUsuarios: UsuariosService, public ModalService:ModalService) {
+  constructor(private UsuarioService: UsuarioService, private busquedaUsuarios: BusquedaService, public ModalService:ModalService) {
     this.cargarUsuarios();
   }
 
