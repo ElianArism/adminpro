@@ -9,7 +9,7 @@
                     <div class="form-group" *ngIf="medicoSeleccionado">
                         <label for="exampleInputuname">Foto:</label>
                         <div class="input-group">
-                           <img [src]="'http://localhost:4000/api/upload/medicos/no-img'" class="w-100" alt="">
+                           <img [src]="medicoSeleccionado.getImg | imagen:'medicos'" class="w-100" alt="">
                         </div>
                     </div>
                     

@@ -30,7 +30,6 @@ export class PerfilComponent implements OnInit {
   }
 
   actualizarUsuario() {
-    console.log(this.formActualizar.value);
     this.UsuarioService.actualizarUsuario(this.formActualizar.value)
     // cambiar datos de usuario
       .subscribe((res:any) => {
@@ -40,7 +39,7 @@ export class PerfilComponent implements OnInit {
 
         Swal.fire('Guardado', 'Tus datos fueron actualizados.', 'success');
       }, (err) => {
-        Swal.fire('Error', err.error.msg, 'error')
+        Swal.fire('Error', 'ocurrio un error', 'error')
       });
   }
 

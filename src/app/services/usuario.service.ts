@@ -39,6 +39,9 @@ export class UsuarioService {
   get getUsuario() {
     return this.usuario;
   }
+  get getRole() {
+    return this.usuario.getRole;
+  }
   get getAuth() {
     return this.auth2;
   }
@@ -50,6 +53,12 @@ export class UsuarioService {
       'x-token': this.getToken
     }}
   }
+
+  setearValoresLS(token: string, menu: any) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('menu', JSON.stringify(menu));
+  }
+
   googleInit() {
     return new Promise<void>(resolve => {
       gapi.load('auth2', () => {
@@ -74,8 +83,7 @@ export class UsuarioService {
         // crear instancia usuario
         this.usuario = new Usuario(nombre, email, '', google, img, role, uid);
         
-        // renovar token en ls
-        localStorage.setItem('token', res.token);
+        this.setearValoresLS(res.token, res.menu);
         
         // si llega aca el token es valido, y retorna true
         return true; 
@@ -91,9 +99,8 @@ export class UsuarioService {
   login(formData: loginForm) {
     return this.http.post(`${this.backend_url}/login`, formData)
       .pipe(
-        tap( (res: any) => {
-          // setear token en ls
-          localStorage.setItem('token', res.token);
+        tap( (res: any) => { 
+          this.setearValoresLS(res.token, res.menu);
         })
       )
   }
@@ -103,8 +110,7 @@ export class UsuarioService {
     return this.http.post(`${this.backend_url}/login/google`, {token})
       .pipe(
         tap( (res: any) => {
-          // setear token en ls
-          localStorage.setItem('token', res.token);
+          this.setearValoresLS(res.token, res.menu);
         })
       )
   }
@@ -115,12 +121,11 @@ export class UsuarioService {
     // post request add user
     return this.http.post(`${this.backend_url}/usuarios`, formData, this.getHeaders)
       .pipe(
-        tap( (res: any) => {
-          // setear token en ls
-          localStorage.setItem('token', res.token);
+        tap( (res: any) => { 
+          this.setearValoresLS(res.token, res.menu);
         })
       )
-  }
+    }  
 
   // solicita actualizar usuario en bd 
   actualizarUsuario(formData: {nombre: string, email: string, role: string}) {
@@ -128,10 +133,13 @@ export class UsuarioService {
       ...formData, 
       role: this.usuario.getRole
     }
-    return this.http.put(`${this.backend_url}/usuarios/${this.usuario.getUid}`, formData, this.getHeaders)
+    const url = `${this.backend_url}/usuarios/${this.usuario.getUid}`;
+    console.log(url)
+    return this.http.put(url, formData, this.getHeaders)
       .pipe(
         tap((res:any) => {
-          localStorage.setItem('token', res.token)
+          console.log(res)
+          this.setearValoresLS(res.token, res.menu);
         })
       )
   }
@@ -160,7 +168,7 @@ export class UsuarioService {
     return this.http.put(`${this.backend_url}/usuarios/${usuario.getUid}`, usuario, this.getHeaders)
       .pipe(
         tap((res:any) => {
-          localStorage.setItem('token', res.token)
+          this.setearValoresLS(res.token, res.menu);
         })
       )
   }
@@ -168,7 +176,7 @@ export class UsuarioService {
   // lanza el logout
   logout() {
     localStorage.removeItem('token');
-
+    localStorage.removeItem('menu');
     // esto es de una libreria externa
     this.auth2.signOut().then(() => {
       

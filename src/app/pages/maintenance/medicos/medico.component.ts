@@ -9,6 +9,7 @@ import { Hospital } from '../../../models/hospital.model';
 import { Medico } from 'src/app/models/medicos.model';
 
 import Swal from 'sweetalert2';
+import { delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-medico',
@@ -55,8 +56,7 @@ export class MedicoComponent implements OnInit {
     if(id === 'nuevo') {
       return;
     }
-
-    this._MedicoService.getMedicoById(id) 
+    this._MedicoService.getMedicoById(id)
       .subscribe((medico: any) => {
         this.medicoSeleccionado = medico;
         const dataMedico = {
@@ -67,7 +67,7 @@ export class MedicoComponent implements OnInit {
         this.medicoForm.setValue(dataMedico);
 
       }, error => {
-        return this._router.navigateByUrl(`/dashboard/medicos`);
+        // return this._router.navigateByUrl(`/dashboard/medicos`);
       });
   }
   cargarHospitales() {

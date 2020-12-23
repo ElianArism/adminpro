@@ -1,0 +1,102 @@
+<div class="row animated fadeIn fast">
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Usuarios</h3>
+
+                <!-- alerta en caso de no existir resultados -->
+                <div class="alert alert-info animated fadeIn fast" *ngIf="usuarios.length === 0">
+                    <h4 class="alert-heading">No hay resultados</h4>
+                    <p>No se encontraron resultados para su busqueda</p>
+                </div>
+
+                <div class="table-responsive animated fadeIn fast" *ngIf="usuarios.length > 0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Avatar</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                            <tr *ngFor="let u of usuarios">
+                                <td><img [src]="u.getImagenUrl" class="img-avatar-2" alt=""></td>
+                                <td>{{u.getNombre}}</td> 
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Medicos</h3>
+
+                <!-- alerta en caso de no existir resultados -->
+                <div class="alert alert-info animated fadeIn fast" *ngIf="medicos.length === 0">
+                    <h4 class="alert-heading">No hay resultados</h4>
+                    <p>No se encontraron resultados para su busqueda</p>
+                </div>
+
+                <div class="table-responsive animated fadeIn fast" *ngIf="medicos.length > 0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Avatar</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                            <tr *ngFor="let m of medicos">
+                                <td>
+                                    <img [src]=" m.getImg | imagen:'medicos' " class="img-avatar-2" alt=""/>
+                                </td>
+                                <td>
+                                    <a [routerLink]="['/dashboard/medico', m.getId] ">{{m.getNombre}}</a>
+                                </td> 
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-4">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Hospitales</h3>
+
+                <!-- alerta en caso de no existir resultados -->
+                <div class="alert alert-info animated fadeIn fast" *ngIf="hospitales.length === 0">
+                    <h4 class="alert-heading">No hay resultados</h4>
+                    <p>No se encontraron resultados para su busqueda</p>
+                </div>
+
+                <div class="table-responsive animated fadeIn fast" *ngIf="hospitales.length > 0">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Avatar</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           
+                            <tr *ngFor="let h of hospitales">
+                                <td><img [src]=" h.img | imagen:'hospitales' " class="img-avatar-2" alt=""></td>
+                                <td>{{h.nombre}}</td> 
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

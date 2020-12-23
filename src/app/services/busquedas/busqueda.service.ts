@@ -50,4 +50,9 @@ export class BusquedaService {
         })
       )
   } 
+
+  busquedaGlobal(termino: string) {
+    const url = `${backend_url}/buscar/${termino}`; 
+    return this.http.get(url, this.getHeaders);
+  }
 }

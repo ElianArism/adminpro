@@ -78,9 +78,11 @@
           ></a>
           <form class="app-search">
             <input
+              (keydown.enter)="buscar(inputTermino.value)"
               type="text"
               class="form-control"
-              placeholder="Search & enter"
+              placeholder="Buscar algo por nombre, presione enter"
+              #inputTermino
             />
             <a class="srh-btn"><i class="ti-close"></i></a>
           </form>

@@ -49,8 +49,13 @@ export class MedicoService {
     const url = `${backend_url}/medicos/${id}`; 
     return this.http.get(url, this.getHeaders).pipe(
       map((res: any ) => {
-        console.log(res.medico.hospital._id)
-        res = new Medico(res.medico.nombre, res.medico.mid, res.medico.img, res.medico.usuario._id, res.medico.hospital._id)
+        if(res.medico.usuario === null) {
+          res = new Medico(res.medico.nombre, res.medico.mid, res.medico.img, null, res.medico.hospital._id)
+        } else if(res.medico.hospital === null) {
+          res = new Medico(res.medico.nombre, res.medico.mid, res.medico.img, res.medico.usuario._id, null)
+        } else {
+          res = new Medico(res.medico.nombre, res.medico.mid, res.medico.img, res.medico.usuario._id, res.medico.hospital._id)
+        }
         return res;
       })
     )
